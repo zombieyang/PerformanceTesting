@@ -1,0 +1,56 @@
+name: run unity
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-2022
+
+    steps:
+      - uses: actions/cache/restore@v3
+        id: cache-unity
+        with:
+          path: C:/UNITY
+          key: ${{ runner.os }}-unity 
+          
+      - name: MKDIR
+        if: steps.cache-unity.outputs.cache-hit != 'true'
+        shell: bash
+        run: mkdir C:/UNITY
+
+      - name: Setup Unity
+        if: steps.cache-unity.outputs.cache-hit != 'true'
+        uses: kuler90/setup-unity@v1
+        with:
+          unity-modules: windows-il2cpp
+          unity-version: '2020.3.35f1'
+          install-path: C:/UNITY
+            
+      - uses: actions/cache/save@v3
+        with:
+          path: C:/UNITY
+          key: ${{ runner.os }}-unity
+
+      - name: Activate Unity
+        uses: kuler90/activate-unity@v1
+        with:
+          unity-path: C:/UNITY/2020.3.35f1/Editor/Unity.exe
+          unity-username: ${{ secrets.UNITY_USERNAME }}
+          unity-password: ${{ secrets.UNITY_PASSWORD }}
+          unity-serial: ${{ secrets.UNITY_AUTHENTICATOR_KEY }}
+          
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Run test
+        shell: bash
+        run: |
+          node .script/get-puerts.mjs --path package --org tencent --version 1.4.1-pre.1
+          node .script/run-test-cli.mjs --pkg package --unity C:/UNITY/2020.3.35f1/Editor/Unity.exe
+  
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          path: ./States/*
+          name: States

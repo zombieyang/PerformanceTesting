@@ -47,14 +47,24 @@ const options = program.opts();
     rm("-rf", `${pwd}/Assets/XLua/Gen.meta`);
     rm("-rf", `${pwd}/STATES.md`);
     
-    await exec(`${unityPath} -batchmode -quit -projectPath "${pwd}" -executeMethod CommandLineTests.GenCode -logFile "log.txt"`);
-    rm("-rf", `${pwd}/Library/ScriptAssemblies`);
-    console.log("[Puer] Running Test");
+    console.log("[Puer] Running test in reflect mode");
+    // 运行测试
     await exec(`${unityPath} -batchmode -quit -projectPath "${pwd}" -executeMethod CommandLineTests.RunTest -logFile "log.txt"`);
     
-    rm("-rf", `${pwd}/States/STATES_${options.pkg}.md`);
-    mv(`${pwd}/STATES.md`, `${pwd}/States/STATES_${options.pkg}.md`);
-    console.log(`[Puer] done. result outputed to "${pwd}/States/STATES_${options.pkg}.md"`);
+    rm("-rf", `${pwd}/States/STATES_${options.pkg}_reflect.md`);
+    mv(`${pwd}/STATES.md`, `${pwd}/States/STATES_${options.pkg}_reflect.md`);
+
+    // 生成v1 static wrapper
+    await exec(`${unityPath} -batchmode -quit -projectPath "${pwd}" -executeMethod CommandLineTests.GenCode -logFile "log.txt"`);
+    rm("-rf", `${pwd}/Library/ScriptAssemblies`);
+    console.log("[Puer] Running test in wrapper mode");
+    // 运行测试
+    await exec(`${unityPath} -batchmode -quit -projectPath "${pwd}" -executeMethod CommandLineTests.RunTest -logFile "log.txt"`);
+    
+    rm("-rf", `${pwd}/States/STATES_${options.pkg}_wrapper.md`);
+    mv(`${pwd}/STATES.md`, `${pwd}/States/STATES_${options.pkg}_static.md`);
+
+    console.log(`[Puer] done. result outputed to "${pwd}/States/STATES_${options.pkg}_static.md" and "${pwd}/States/STATES_${options.pkg}_reflect.md`);
 })().catch(err=> {
     console.log(`error occured! code: ${err.message}. please view log.txt`);
 });
