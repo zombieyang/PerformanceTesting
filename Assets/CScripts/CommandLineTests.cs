@@ -75,22 +75,19 @@ public class CommandLineTests
 
         while (enumerator.MoveNext()) { }
     }
+    public static void BuildB() { Build("b"); }
+    public static void BuildC() { Build("c"); }
 
-    [MenuItem("PerformanceTest/Build")]
-    public static void Build()
+    [MenuItem("PerformanceTest/Build")] 
+    public static void Build(string exedir = "a")
     {
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "");
         // PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "EXPERIMENTAL_IL2CPP_PUERTS");
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.IL2CPP);
-        EditorUserBuildSettings.SetPlatformSettings(
-            "Standalone",
-            "CreateSolution",
-            "false"
-        );
 
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/SampleScene.unity"};
-        buildPlayerOptions.locationPathName = "build/a.exe";
+        buildPlayerOptions.locationPathName = "build/" + exedir + "/PerformanceTest.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.None;
 

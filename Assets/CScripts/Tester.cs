@@ -130,6 +130,9 @@ public class Tester
             totalDuration.End().ToString("f1"), 
             OutputResult(statesList)
         );
+#if !UNITY_EDITOR
+        Application.Quit();
+#endif
     }
 
     protected string OutputResult(List<ExecuteStates> statesList) 
