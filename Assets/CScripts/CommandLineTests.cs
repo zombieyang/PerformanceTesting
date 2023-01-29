@@ -1,9 +1,11 @@
+#if UNITY_EDITOR
 using System;
 using System.IO;
 using UnityEngine;
 using System.Collections;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 
 public class CommandLineTests
 {
@@ -56,7 +58,7 @@ public class CommandLineTests
         }
     }
 
-    [MenuItem("PerformanceTest/run Test")]
+    [MenuItem("PerformanceTest/Run Test")]
     public static void RunTest()
     {
         Tester tester = new Tester(
@@ -73,4 +75,37 @@ public class CommandLineTests
 
         while (enumerator.MoveNext()) { }
     }
+
+    [MenuItem("PerformanceTest/Build")]
+    public static void Build()
+    {
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "");
+        // PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "EXPERIMENTAL_IL2CPP_PUERTS");
+        PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.IL2CPP);
+        EditorUserBuildSettings.SetPlatformSettings(
+            "Standalone",
+            "CreateSolution",
+            "false"
+        );
+
+        BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
+        buildPlayerOptions.scenes = new[] { "Assets/Scenes/SampleScene.unity"};
+        buildPlayerOptions.locationPathName = "build/a.exe";
+        buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
+        buildPlayerOptions.options = BuildOptions.None;
+
+        BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+        BuildSummary summary = report.summary;
+
+        if (summary.result == BuildResult.Succeeded)
+        {
+            Debug.Log("Build succeeded: " + summary.outputPath + " with " + summary.totalSize + " bytes");
+        }
+
+        if (summary.result == BuildResult.Failed)
+        {
+            Debug.Log("Build failed: " + summary.outputPath);
+        }
+    }
 }
+#endif
