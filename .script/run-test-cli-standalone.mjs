@@ -47,10 +47,10 @@ const options = program.opts();
     rm("-rf", `${pwd}/STATES.md`);
     
     
-    console.log("[Puer] Building testplayer for reflect mode");
     // 运行测试
     mkdir("-p", `${pwd}/build/b`)
     rm("-rf", `${pwd}/Library/ScriptAssemblies`);
+    console.log("[Puer] Building testplayer for reflect mode");
     await exec(`${unityPath} -batchmode -quit -projectPath "${pwd}" -executeMethod CommandLineTests.BuildB -logFile "log.txt"`);
     console.log("[Puer] Running test in reflect mode");
     await exec(`${pwd}/build/b/PerformanceTest.exe`);
