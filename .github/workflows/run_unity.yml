@@ -49,7 +49,7 @@ jobs:
         run: |
           npm i
           node .script/get-puerts.mjs --path package --org tencent --version 1.4.1-pre.1
-          node .script/run-test-cli.mjs --pkg package --unity C:/UNITY/2020.3.35f1/Editor/Unity.exe
+          node .script/run-test-cli-standalone.mjs --pkg package --unity C:/UNITY/2020.3.35f1/Editor/Unity.exe
   
       - name: Upload
         uses: actions/upload-artifact@v3
