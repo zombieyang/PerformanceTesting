@@ -44,7 +44,7 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v2
         with:
-          submodule: true
+          submodule: 'true'
 
       - name: Run test
         shell: bash
