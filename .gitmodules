@@ -1,0 +1,4 @@
+[submodule "puerts"]
+	path = puerts
+	url = https://github.com/Tencent/puerts.git
+	branch = unity-2.0.x

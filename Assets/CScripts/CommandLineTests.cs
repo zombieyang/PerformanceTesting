@@ -77,12 +77,17 @@ public class CommandLineTests
     }
     public static void BuildB() { Build("b"); }
     public static void BuildC() { Build("c"); }
+    public static void BuildD() { Build("d"); }
+
+    public static void BuildZ() { Build("z", true); }
+    public static void BuildY() { Build("y", true); }
+    public static void BuildX() { Build("x", true); }
 
     [MenuItem("PerformanceTest/Build")] 
-    public static void Build(string exedir = "a")
+    public static void Build(string exedir = "a", bool withExperimental = false)
     {
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "");
-        // PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "EXPERIMENTAL_IL2CPP_PUERTS");
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, withExperimental ? "EXPERIMENTAL_IL2CPP_PUERTS" : "");
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.IL2CPP);
 
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();

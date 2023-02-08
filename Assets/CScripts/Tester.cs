@@ -22,6 +22,7 @@ public class Tester
 
     public Tester(int[] repeatTimePerSuite, string statesOutputPath) {
         jsEnv = new JsEnv();
+        Puerts.ThirdParty.CommonJS.InjectSupportForCJS(jsEnv);
         luaEnv = new LuaEnv();
         this.AutoUsing(jsEnv);
         this.repeatTimePerSuite = repeatTimePerSuite;

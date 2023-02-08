@@ -42,7 +42,7 @@ public static class MarkdownUtil
         builder.AppendLine();
         builder.AppendFormat("| Unity           | {0}               |", Application.unityVersion);
         builder.AppendLine();
-        builder.AppendFormat("| puerts          | {0}               |", Puerts.PuertsDLL.GetLibVersion());
+        builder.AppendFormat("| puerts          | {0}               |", "0");
         builder.AppendLine();
         builder.AppendFormat("| xLua            | {0}               |", XLua.LuaDLL.Lua.xlua_get_lib_version());
         return builder.ToString();
