@@ -4,14 +4,18 @@
 
 	<assembly fullname="Assembly-CSharp">
 	    <type fullname="Example1" preserve="all"/>
+		<type fullname="Example10" preserve="all"/>
+		<type fullname="Example11" preserve="all"/>
+		<type fullname="Example12" preserve="all"/>
+		<type fullname="Example13" preserve="all"/>
 		<type fullname="Example2" preserve="all"/>
-		<type fullname="Example3" preserve="all"/>
-		<type fullname="Example4" preserve="all"/>
-		<type fullname="Example5" preserve="all"/>
-		<type fullname="Example6" preserve="all"/>
-		<type fullname="Example7" preserve="all"/>
-		<type fullname="Example8" preserve="all"/>
-		<type fullname="Example9" preserve="all"/>
+		<type fullname="Example20" preserve="all"/>
+		<type fullname="Example21" preserve="all"/>
+		<type fullname="Example22" preserve="all"/>
+		<type fullname="Example23" preserve="all"/>
+		<type fullname="Example30" preserve="all"/>
+		<type fullname="Example31" preserve="all"/>
+		<type fullname="Example32" preserve="all"/>
 		<type fullname="Example101" preserve="all"/>
 		<type fullname="Example103" preserve="all"/>
 		<type fullname="Example104" preserve="all"/>

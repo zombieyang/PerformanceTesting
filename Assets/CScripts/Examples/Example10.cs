@@ -9,7 +9,7 @@ using XLua;
 /// </summary>
 [Test]
 [TestGroup("ParameterCompare")]
-public class Example3 : IExecute
+public class Example10 : IExecute
 {
     public bool Static => true;
     public string Method => "void Payload(int);";
@@ -19,7 +19,7 @@ public class Example3 : IExecute
     {
         for (var i = 0; i < count; i++)
         {
-            Example3.Payload(i);
+            Example10.Payload(i);
         }
         return null;
     }
@@ -27,7 +27,7 @@ public class Example3 : IExecute
     {
         env.Eval(string.Format(
 @"
-var Example = require('csharp').Example3;
+var Example = require('csharp').Example10;
 for(let i = 0; i < {0}; i++){{
     Example.Payload(i);
 }}
@@ -38,7 +38,7 @@ for(let i = 0; i < {0}; i++){{
     {
         env.DoString(string.Format(
 @"
-local Example = CS.Example3;
+local Example = CS.Example10;
 for i = 1,{0} do
     Example.Payload(i);
 end

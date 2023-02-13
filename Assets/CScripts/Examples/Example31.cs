@@ -10,7 +10,7 @@ using XLua;
 /// </summary>
 [Test]
 [TestGroup("xyz vs Vector3", 1, Desc = "xyz传参 vs Vector3传参")]
-public class Example8 : IExecute
+public class Example31 : IExecute
 {
     public bool Static => true;
     public string Method => "Quaternion Payload(Transform, float, float, float);";
@@ -21,7 +21,7 @@ public class Example8 : IExecute
         var obj = new GameObject().transform;
         for (var i = 0; i < count; i++)
         {
-            Example8.Payload(obj, i % 3f, i % 4f, i % 5f);
+            Example31.Payload(obj, i % 3f, i % 4f, i % 5f);
         }
         var result = obj.rotation;
         Object.DestroyImmediate(obj.gameObject);
@@ -32,7 +32,7 @@ public class Example8 : IExecute
     {
         var result = env.Eval<Quaternion>(string.Format(
  @"
-var Example = require('csharp').Example8;
+var Example = require('csharp').Example31;
 
 var obj = new (require('csharp').UnityEngine.GameObject)().transform;
 for(let i = 0; i < {0}; i++){{
@@ -49,7 +49,7 @@ result;
     {
         object[] result = env.DoString(string.Format(
 @"
-local Example = CS.Example8;
+local Example = CS.Example31;
 
 local obj = CS.UnityEngine.GameObject().transform;
 for i = 0,{0} do

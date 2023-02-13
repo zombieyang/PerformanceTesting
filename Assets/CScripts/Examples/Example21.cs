@@ -8,18 +8,19 @@ using XLua;
 /// 返回值: 值类型
 /// </summary>
 [Test]
-public class Example5 : IExecute
+public class Example21 : IExecute
 {
-    public bool Static => true;
+    public bool Static => false;
     public string Method => "float Payload(int, int, float);";
     public CallTarget Target => CallTarget.ScriptCallCSharp;
 
     public object RunCS(int count)
     {
         float result = 0f;
+        var obj = new Example21();
         for (var i = 0; i < count; i++)
         {
-            result += Example5.Payload(i, i + 1, i + 2f);
+            result += obj.Payload(i, i + 1, i + 2f);
         }
         return result;
     }
@@ -27,7 +28,7 @@ public class Example5 : IExecute
     {
         float result = env.Eval<float>(string.Format(
 @"
-var Example = require('csharp').Example5;
+var Example = new (require('csharp').Example21)();
 var result = 0;
 for(let i = 0; i < {0}; i++){{
     result += Example.Payload(i, i + 1, i + 2);
@@ -41,7 +42,7 @@ result;
     {
         object[] result = env.DoString(string.Format(
 @"
-local Example = CS.Example5;
+local Example = CS.Example21();
 local result = 0;
 for i = 0,{0} do
     result = result + Example.Payload(i, i + 1, i + 2);
@@ -53,7 +54,7 @@ return result;
         return result != null && result.Length > 0 ? result[0] : null;
     }
 
-    public static float Payload(int param1, int param2, float param3)
+    public float Payload(int param1, int param2, float param3)
     {
         return param1 + param2 + param3;
     }
