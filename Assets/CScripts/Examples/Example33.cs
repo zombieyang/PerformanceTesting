@@ -5,23 +5,24 @@ using XLua;
 /// <summary>
 /// 静态方法调用
 /// 逻辑:   调用Transform.Rotate
-/// 参数:   1引用类型
+/// 参数:   1引用类型, 3个值类型
 /// 返回值: UnityEngine.Quaternion
 /// </summary>
 [Test]
-public class Example31 : IExecute
+[TestGroup("xyz vs Vector3", 1, Desc = "xyz传参 vs Vector3传参")]
+public class Example33 : IExecute
 {
     public bool Static => false;
-    public string Method => "Quaternion Payload(Transform);";
+    public string Method => "Quaternion Payload(Transform, float, float, float);";
     public CallTarget Target => CallTarget.ScriptCallCSharp;
 
     public object RunCS(int count)
     {
         var obj = new GameObject().transform;
-        var exp = new Example31();
+        var exp = new Example33();
         for (var i = 0; i < count; i++)
         {
-            exp.Payload(obj);
+            exp.Payload(obj, i % 3f, i % 4f, i % 5f);
         }
         var result = obj.rotation;
         Object.DestroyImmediate(obj.gameObject);
@@ -31,30 +32,29 @@ public class Example31 : IExecute
     public object RunJS(JsEnv env, int count)
     {
         var result = env.Eval<Quaternion>(string.Format(
-@"
-var Example = new (require('csharp').Example31);
+ @"
+var Example = new (require('csharp').Example33);
 
 var obj = new (require('csharp').UnityEngine.GameObject)().transform;
 for(let i = 0; i < {0}; i++){{
-    Example.Payload(obj);
+    Example.Payload(obj, i % 3, i % 4, i % 5);
 }}
 var result = obj.rotation;
 require('csharp').UnityEngine.Object.DestroyImmediate(obj.gameObject);
 
 result;
 ", count));
-
         return result;
     }
     public object RunLua(LuaEnv env, int count)
     {
         object[] result = env.DoString(string.Format(
 @"
-local Example = CS.Example31();
+local Example = CS.Example33();
 
 local obj = CS.UnityEngine.GameObject().transform;
 for i = 0,{0} do
-    Example:Payload(obj);
+    Example:Payload(obj, i % 3, i % 4, i % 5);
 end
 local result = obj.rotation;
 CS.UnityEngine.Object.DestroyImmediate(obj.gameObject);
@@ -65,8 +65,8 @@ return result;
         return result != null && result.Length > 0 ? result[0] : null;
     }
 
-    public void Payload(Transform transform)
+    public void Payload(Transform transform, float x, float y, float z)
     {
-        transform.Rotate(1, 1, 1);
+        transform.Rotate(x, y, z);
     }
 }

@@ -5,23 +5,24 @@ using XLua;
 /// <summary>
 /// 静态方法调用
 /// 逻辑:   调用Transform.Rotate
-/// 参数:   1引用类型
+/// 参数:   1引用类型, 1个值类型(Vector3)
 /// 返回值: UnityEngine.Quaternion
 /// </summary>
 [Test]
-public class Example31 : IExecute
+[TestGroup("xyz vs Vector3")]
+public class Example34 : IExecute
 {
-    public bool Static => false;
-    public string Method => "Quaternion Payload(Transform);";
+    public bool Static => true;
+    public string Method => "Quaternion Payload(Transform, Vector3);";
     public CallTarget Target => CallTarget.ScriptCallCSharp;
 
     public object RunCS(int count)
     {
         var obj = new GameObject().transform;
-        var exp = new Example31();
+        var eulers = new Vector3(1f, 2f, 3f);
         for (var i = 0; i < count; i++)
         {
-            exp.Payload(obj);
+            Example34.Payload(obj, eulers);
         }
         var result = obj.rotation;
         Object.DestroyImmediate(obj.gameObject);
@@ -31,30 +32,31 @@ public class Example31 : IExecute
     public object RunJS(JsEnv env, int count)
     {
         var result = env.Eval<Quaternion>(string.Format(
-@"
-var Example = new (require('csharp').Example31);
+ @"
+var Example = require('csharp').Example34;
 
 var obj = new (require('csharp').UnityEngine.GameObject)().transform;
+var eulers = new (require('csharp').UnityEngine.Vector3)(1, 2, 3);
 for(let i = 0; i < {0}; i++){{
-    Example.Payload(obj);
+    Example.Payload(obj, eulers);
 }}
 var result = obj.rotation;
 require('csharp').UnityEngine.Object.DestroyImmediate(obj.gameObject);
 
 result;
 ", count));
-
         return result;
     }
     public object RunLua(LuaEnv env, int count)
     {
         object[] result = env.DoString(string.Format(
 @"
-local Example = CS.Example31();
+local Example = CS.Example34;
 
 local obj = CS.UnityEngine.GameObject().transform;
+local eulers = CS.UnityEngine.Vector3(1, 2, 3);
 for i = 0,{0} do
-    Example:Payload(obj);
+    Example.Payload(obj, eulers);
 end
 local result = obj.rotation;
 CS.UnityEngine.Object.DestroyImmediate(obj.gameObject);
@@ -65,8 +67,8 @@ return result;
         return result != null && result.Length > 0 ? result[0] : null;
     }
 
-    public void Payload(Transform transform)
+    public static void Payload(Transform transform, Vector3 eulers)
     {
-        transform.Rotate(1, 1, 1);
+        transform.Rotate(eulers);
     }
 }

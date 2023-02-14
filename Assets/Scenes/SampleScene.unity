@@ -1175,7 +1175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoStart: 1
-  repeatTimePerSuite: 40420f00
+  repeatTimePerSuite: 400d0300
   m_ContentText: {fileID: 2010908250}
   m_StartBtn: {fileID: 382358313}
   m_StopBtn: {fileID: 406628905}
