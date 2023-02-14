@@ -45,7 +45,7 @@ result;
 local Example = CS.Example23();
 local result = 0;
 for i = 0,{0} do
-    result = result + Example.Payload();
+    result = result + Example:Payload();
 end
 
 return result;

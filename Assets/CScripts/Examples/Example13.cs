@@ -41,7 +41,7 @@ for(let i = 0; i < {0}; i++){{
 @"
 local Example = CS.Example13();
 for i = 1,{0} do
-    Example.Payload(1, i + 1, i + 2);
+    Example:Payload(1, i + 1, i + 2);
 end
 ", count));
         return null;

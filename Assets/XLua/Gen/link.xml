@@ -3,12 +3,12 @@
 <linker>
 
 	<assembly fullname="Assembly-CSharp">
-	    <type fullname="Example1" preserve="all"/>
+	    <type fullname="Example01" preserve="all"/>
+		<type fullname="Example02" preserve="all"/>
 		<type fullname="Example10" preserve="all"/>
 		<type fullname="Example11" preserve="all"/>
 		<type fullname="Example12" preserve="all"/>
 		<type fullname="Example13" preserve="all"/>
-		<type fullname="Example2" preserve="all"/>
 		<type fullname="Example20" preserve="all"/>
 		<type fullname="Example21" preserve="all"/>
 		<type fullname="Example22" preserve="all"/>
