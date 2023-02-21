@@ -1,0 +1,114 @@
+name: build tester
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: macos-latest
+
+    steps:
+      - name: MKDIR
+        shell: bash
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/../UNITY
+          cd $GITHUB_WORKSPACE/../UNITY
+          echo "PUER_UNITY_DIR=$(pwd)" >> $GITHUB_ENV
+          echo "PUER_UNITY_VERSION=2021.3.16f1" >> $GITHUB_ENV
+          sudo mkdir -p /Library/Application\ Support/Unity
+          sudo chmod 777 /Library/Application\ Support/Unity
+          
+        
+      - uses: actions/cache/restore@v3
+        id: cache-unity
+        with:
+          path: ${{ env.PUER_UNITY_DIR }}
+          key: ${{ runner.os }}-2021-3-16f1-unity 
+
+      - name: Setup Unity
+        id: setup-unity
+        if: steps.cache-unity.outputs.cache-hit != 'true'
+        uses: kuler90/setup-unity@v1
+        with:
+          install-path: ${{ env.PUER_UNITY_DIR }}
+          unity-modules: |
+            mac-il2cpp
+            android
+            ios
+          unity-version: ${{ env.PUER_UNITY_VERSION }}
+            
+      - uses: actions/cache/save@v3
+        if: steps.cache-unity.outputs.cache-hit != 'true'
+        with:
+          path: ${{ env.PUER_UNITY_DIR }}
+          key: ${{ runner.os }}-2021-3-16f1-unity
+          
+      - name: set binary path
+        shell: bash
+        run: |
+          echo "PUER_UNITY_BINARY=${{ env.PUER_UNITY_DIR }}/${{env.PUER_UNITY_VERSION}}/Unity.app/Contents/MacOS/Unity" >> $GITHUB_ENV
+
+      - name: Activate Unity
+        uses: kuler90/activate-unity@v1
+        with:
+          unity-path: ${{ env.PUER_UNITY_BINARY }}
+          unity-username: ${{ secrets.UNITY_USERNAME }}
+          unity-password: ${{ secrets.UNITY_PASSWORD }}
+          unity-serial: ${{ secrets.UNITY_AUTHENTICATOR_KEY }}
+          
+      - name: Checkout project
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Install NDK
+        shell: bash
+        run: |
+          cd ~
+          rm -rf ~/android-ndk-r21b
+          wget -O NDK -q https://dl.google.com/android/repository/android-ndk-r21b-darwin-x86_64.zip
+          unzip -q NDK
+          
+      - name: build android
+        shell: bash
+        run: |
+          cd ${{ github.workspace }}
+          npm i
+          mkdir -p buildlog
+          ANDROID_NDK=~/android-ndk-r21b node .script/build-test-cli.mjs --unity ${{ env.PUER_UNITY_BINARY }} --platform android
+          ls -l build
+  
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          path: ${{ github.workspace }}/build/*
+          name: android
+
+      - name: build ios
+        shell: bash
+        run: |
+          cd ${{ github.workspace }}
+          rm -rf build
+          mkdir -p buildlog
+          node .script/build-test-cli.mjs --unity ${{ env.PUER_UNITY_BINARY }} --platform ios
+          ls -l build
+  
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          path: ${{ github.workspace }}/build/*
+          name: ios
+  
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          path: ${{ github.workspace }}/buildlog-android/*
+          name: buildlog-android
+          
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          path: ${{ github.workspace }}/buildlog-ios/*
+          name: buildlog-ios

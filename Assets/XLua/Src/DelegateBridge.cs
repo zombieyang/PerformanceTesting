@@ -86,19 +86,19 @@ namespace XLua
 
     public static class HotfixDelegateBridge
     {
-#if (UNITY_IPHONE || UNITY_TVOS) && !UNITY_EDITOR
-        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool xlua_get_hotfix_flag(int idx);
+// #if (UNITY_IPHONE || UNITY_TVOS) && !UNITY_EDITOR
+//         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+//         public static extern bool xlua_get_hotfix_flag(int idx);
 
         
-        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void xlua_set_hotfix_flag(int idx, bool flag);
-#else
+//         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+//         public static extern void xlua_set_hotfix_flag(int idx, bool flag);
+// #else
         public static bool xlua_get_hotfix_flag(int idx)
         {
             return (idx < DelegateBridge.DelegateBridgeList.Length) && (DelegateBridge.DelegateBridgeList[idx] != null);
         }
-#endif
+// #endif
 
         public static DelegateBridge Get(int idx)
         {
@@ -117,9 +117,9 @@ namespace XLua
                 DelegateBridge.DelegateBridgeList = newList;
             }
             DelegateBridge.DelegateBridgeList[idx] = val;
-#if (UNITY_IPHONE || UNITY_TVOS) && !UNITY_EDITOR
-            xlua_set_hotfix_flag(idx, val != null);
-#endif
+// #if (UNITY_IPHONE || UNITY_TVOS) && !UNITY_EDITOR
+//             xlua_set_hotfix_flag(idx, val != null);
+// #endif
         }
     }
 

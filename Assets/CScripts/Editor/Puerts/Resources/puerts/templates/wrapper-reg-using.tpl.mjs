@@ -1,4 +1,13 @@
-﻿namespace PuertsStaticWrap
+/**
+ * this template file is write for generating the wrapper register code
+ * 
+ * @param {GenInfo[]} infos
+ * @returns 
+ */
+export default function AutoRegTemplate(infos) {
+    infos = toJsArray(infos);
+    return `
+namespace PuertsStaticWrap
 {
     using System;
     using System.Linq;
@@ -10,18 +19,12 @@
     {
         public static void AutoUsing(this JsEnv jsEnv)
         {
-            jsEnv.UsingAction<System.Int32>();
-            jsEnv.UsingAction<System.Int32, System.Int32, System.Single>();
-            jsEnv.UsingAction<System.IntPtr, System.Int32, System.Object>();
-            jsEnv.UsingAction<System.IntPtr, System.Object>();
-            jsEnv.UsingAction<UnityEngine.Transform, System.Single, System.Single, System.Single>();
-            jsEnv.UsingAction<UnityEngine.Transform, UnityEngine.Vector3>();
-            jsEnv.UsingFunc<System.Int32, System.Int32, System.Single, System.Single>();
-            jsEnv.UsingFunc<System.IntPtr, System.Int32>();
-            jsEnv.UsingFunc<System.IntPtr, System.Int32, System.Boolean>();
-            jsEnv.UsingFunc<System.IntPtr, System.Int32, System.Object>();
-            jsEnv.UsingFunc<System.IntPtr, System.Int32, System.Object, System.Object>();
-            jsEnv.UsingFunc<System.Single>();
+${
+    infos.map(info => {
+        return '            ' +
+            `jsEnv.${info.Name}<${toJsArray(info.Parameters).join(', ')}>();`;
+    }).join("\n")
+}
         }
 
         public static void UsingAction(this JsEnv jsEnv, params string[] args)
@@ -61,4 +64,15 @@
             return types.ToArray();
         }
     }
+}
+
+    `.trim();
+};
+
+function toJsArray(csArr) {
+    let arr = [];
+    for (var i = 0; i < csArr.Length; i++) {
+        arr.push(csArr.get_Item(i));
+    }
+    return arr;
 }

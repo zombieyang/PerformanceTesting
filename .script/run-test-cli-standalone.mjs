@@ -38,7 +38,7 @@ const options = program.opts();
     rm("-rf", `${pwd}/STATES.md`);
     
     cd(`${pwd}/puerts/unity/native_src`)
-    exec(`node ../cli make vw6d`);
+    exec(`node ../cli make vw6`);
     cd(pwd)
 
     
@@ -61,10 +61,10 @@ const options = program.opts();
     //build
     console.log("[Puer] Building testplayer for wrapper mode");
     mkdir("-p", `${pwd}/build/c`)
-    await exec(`${unityPath} -batchmode -quit -projectPath "${pwd}" -executeMethod CommandLineTests.BuildC -logFile "log.txt"`);
+    exec(`${unityPath} -batchmode -quit -projectPath "${pwd}" -executeMethod CommandLineTests.BuildC -logFile "log.txt"`);
     // 运行静态测试
     console.log("[Puer] Running test in wrapper mode");
-    await exec(`${pwd}/build/c/PerformanceTest.exe`);
+    exec(`${pwd}/build/c/PerformanceTest.exe`);
     // postbuild
     rm("-rf", `${pwd}/States/STATES_wrapper.md`);
     mv(`${pwd}/build/c/STATES.md`, `${pwd}/States/STATES_wrapper.md`);
@@ -74,7 +74,7 @@ const options = program.opts();
     cp(`${pwd}/Assets/Gen/FunctionBridge.Gen.h`, `${pwd}/puerts/unity/native_src_il2cpp/Src/`);
 
     cd(`${pwd}/puerts/unity/native_src_il2cpp`)
-    exec(`node ../cli make vw6d`);
+    exec(`node ../cli make vw6`);
     cd(pwd)
     //build
     console.log("[Puer] Building testplayer for il2cpp version wrapper mode");

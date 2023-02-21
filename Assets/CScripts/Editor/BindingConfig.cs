@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 using XLua;
 
 [Puerts.Configure]
@@ -34,6 +35,37 @@ public static class XLuaConfig
 
             return exampleTypes
                 .Concat(delegateTypes)
+                .Concat(new Type[] {
+                    typeof(UnityEngine.Application),
+                    typeof(Debug),
+                    typeof(Vector3),
+                    typeof(Bounds),
+                    typeof(Time),
+                    typeof(Transform),
+                    typeof(Component),
+                    typeof(GameObject),
+                    typeof(UnityEngine.Object),
+                    typeof(Delegate),
+                    typeof(System.Object),
+                    typeof(ParticleSystem),
+                    typeof(Canvas),
+                    typeof(RenderMode),
+                    typeof(Behaviour),
+
+                    typeof(UnityEngine.Networking.UnityWebRequest),
+                    typeof(UnityEngine.Networking.DownloadHandler),
+                    typeof(UnityEngine.EventSystems.UIBehaviour),
+                    typeof(UnityEngine.UI.Selectable),
+                    typeof(UnityEngine.UI.Button),
+                    typeof(UnityEngine.UI.Button.ButtonClickedEvent),
+                    typeof(UnityEngine.Events.UnityEvent),
+                    typeof(UnityEngine.UI.InputField),
+                    typeof(UnityEngine.UI.Toggle),
+                    typeof(UnityEngine.UI.Toggle.ToggleEvent),
+                    typeof(UnityEngine.Events.UnityEvent<bool>),
+                    typeof(Calculator),
+                    typeof(CalculatorExtension)
+                })
                 .Distinct();
         }
     }

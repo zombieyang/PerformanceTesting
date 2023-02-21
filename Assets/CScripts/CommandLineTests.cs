@@ -9,9 +9,10 @@ using UnityEditor.Build.Reporting;
 
 public class CommandLineTests
 {
-    [MenuItem(("PerformanceTest/Gen Code"))]
-    public static void GenCode()
+    [MenuItem(("PerformanceTest/Gen Code V1"))]
+    public static void GenV1()
     {
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "");
         {
             const string typeName = "CSObjectWrapEditor.Generator";
             var type = (from _assembly in AppDomain.CurrentDomain.GetAssemblies()
@@ -56,6 +57,16 @@ public class CommandLineTests
                 type.GetMethod("GenerateUsingCode").Invoke(null, new object[] {});
             }
         }
+        // Puerts.Editor.Generator.UnityMenu.GenerateMacroHeader(false);
+    }
+    [MenuItem(("PerformanceTest/Gen Code V2"))]
+    public static void GenV2() 
+    {
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "EXPERIMENTAL_IL2CPP_PUERTS");
+        PuertsIl2cpp.Editor.Generator.UnityMenu.GenerateCppWrappers();
+        PuertsIl2cpp.Editor.Generator.UnityMenu.GenerateExtensionMethodInfos();
+        PuertsIl2cpp.Editor.Generator.UnityMenu.GenerateLinkXML();
+        // Puerts.Editor.Generator.UnityMenu.GenerateMacroHeader(true);
     }
 
     [MenuItem("PerformanceTest/Run Test")]
@@ -75,7 +86,9 @@ public class CommandLineTests
 
         while (enumerator.MoveNext()) { }
     }
-    public static void BuildB() { Build("b"); }
+    
+    [MenuItem("PerformanceTest/BuildForWindows")] 
+    public static void BuildA() { Build("a"); }
     public static void BuildC() { Build("c"); }
     public static void BuildD() { Build("d"); }
 
@@ -83,7 +96,7 @@ public class CommandLineTests
     public static void BuildY() { Build("y", true); }
     public static void BuildX() { Build("x", true); }
 
-    [MenuItem("PerformanceTest/Build")] 
+    
     public static void Build(string exedir = "a", bool withExperimental = false)
     {
         PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "");
@@ -91,7 +104,7 @@ public class CommandLineTests
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.IL2CPP);
 
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[] { "Assets/Scenes/SampleScene.unity"};
+        buildPlayerOptions.scenes = new[] { "Assets/TempScript/TempScene.unity"};
         buildPlayerOptions.locationPathName = "build/" + exedir + "/PerformanceTest.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.None;
@@ -102,11 +115,90 @@ public class CommandLineTests
         if (summary.result == BuildResult.Succeeded)
         {
             Debug.Log("Build succeeded: " + summary.outputPath + " with " + summary.totalSize + " bytes");
+            if (Application.isBatchMode) Application.Quit(0);
         }
 
         if (summary.result == BuildResult.Failed)
         {
             Debug.Log("Build failed: " + summary.outputPath);
+            if (Application.isBatchMode) Application.Quit(1);
+        }
+    }
+    
+    [MenuItem("PerformanceTest/Build For iOS")] 
+    public static void BuildiOSA() { BuildIOS("ia"); }
+    public static void BuildiOSB() { BuildIOS("ib"); }
+    public static void BuildiOSC() { BuildIOS("ic"); }
+    public static void BuildiOSD() { BuildIOS("id"); }
+    public static void BuildiOSX() { BuildIOS("ix", true); }
+    public static void BuildiOSY() { BuildIOS("iy", true); }
+    public static void BuildiOSZ() { BuildIOS("iz", true); }
+
+
+    public static void BuildIOS(string exedir = "a", bool withExperimental = false)
+    {
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "");
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, withExperimental ? "EXPERIMENTAL_IL2CPP_PUERTS" : "");
+        PlayerSettings.SetScriptingBackend(BuildTargetGroup.iOS, ScriptingImplementation.IL2CPP);
+
+        BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
+        buildPlayerOptions.scenes = new[] { "Assets/TempScript/TempScene.unity"};
+        buildPlayerOptions.locationPathName = "build/" + exedir;
+        buildPlayerOptions.target = BuildTarget.iOS;
+        buildPlayerOptions.options = BuildOptions.None;
+
+        BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+        BuildSummary summary = report.summary;
+
+        if (summary.result == BuildResult.Succeeded)
+        {
+            Debug.Log("Build succeeded: " + summary.outputPath + " with " + summary.totalSize + " bytes");
+            if (Application.isBatchMode) Application.Quit(0);
+        }
+
+        if (summary.result == BuildResult.Failed)
+        {
+            Debug.Log("Build failed: " + summary.outputPath);
+            if (Application.isBatchMode) Application.Quit(1);
+        }
+    }
+    
+    [MenuItem("PerformanceTest/Build For Android")] 
+    public static void BuildAndroidA() { BuildAndroid("aa"); }
+    public static void BuildAndroidB() { BuildAndroid("ab"); }
+    public static void BuildAndroidC() { BuildAndroid("ac"); }
+    public static void BuildAndroidD() { BuildAndroid("ad"); }
+    public static void BuildAndroidX() { BuildAndroid("ax", true); }
+    public static void BuildAndroidY() { BuildAndroid("ay", true); }
+    public static void BuildAndroidZ() { BuildAndroid("az", true); }
+
+
+    public static void BuildAndroid(string exedir = "a", bool withExperimental = false)
+    {
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, "");
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, withExperimental ? "EXPERIMENTAL_IL2CPP_PUERTS" : "");
+        PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
+        PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
+
+        BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
+        buildPlayerOptions.scenes = new[] { "Assets/TempScript/TempScene.unity"};
+        buildPlayerOptions.locationPathName = "build/" + exedir + ".apk";
+        buildPlayerOptions.target = BuildTarget.Android;
+        buildPlayerOptions.options = BuildOptions.None;
+
+        BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+        BuildSummary summary = report.summary;
+
+        if (summary.result == BuildResult.Succeeded)
+        {
+            Debug.Log("Build succeeded: " + summary.outputPath + " with " + summary.totalSize + " bytes");
+            if (Application.isBatchMode) Application.Quit(0);
+        }
+
+        if (summary.result == BuildResult.Failed)
+        {
+            Debug.Log("Build failed: " + summary.outputPath);
+            if (Application.isBatchMode) Application.Quit(1);
         }
     }
 }

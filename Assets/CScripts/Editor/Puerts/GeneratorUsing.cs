@@ -205,8 +205,8 @@ namespace Puerts.Editor
             }
             using (var jsEnv = new JsEnv())
             {
-                Puerts.ThirdParty.CommonJS.InjectSupportForCJS(jsEnv);
-                var autoRegisterRender = jsEnv.Eval<Func<GenInfo[], string>>("require('puerts/templates/wrapper-reg-using.tpl.cjs')");
+                // Puerts.ThirdParty.CommonJS.InjectSupportForCJS(jsEnv);
+                var autoRegisterRender = jsEnv.ExecuteModule<Func<GenInfo[], string>>("puerts/templates/wrapper-reg-using.tpl.mjs", "default");
                 using (StreamWriter textWriter = new StreamWriter(saveTo + "AutoStaticCodeUsing.cs", false, Encoding.UTF8))
                 {
                     string fileContext = autoRegisterRender(genInfos.OrderBy(o => (o.Name + "<" + string.Join(", ", o.Parameters))).ToArray());
