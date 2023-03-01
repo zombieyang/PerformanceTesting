@@ -18,4 +18,4 @@ Assets/XLua/Gen/*Wrap.cs.meta
 Assets/XLua/Gen/XLuaGenAutoRegister.cs
 Assets/XLua/Gen/XLuaGenAutoRegister.cs.meta
 node_modules
-
+.DS_Store

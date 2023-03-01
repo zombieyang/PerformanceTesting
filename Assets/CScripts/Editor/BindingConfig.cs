@@ -69,4 +69,14 @@ public static class XLuaConfig
                 .Distinct();
         }
     }
+    [Puerts.Binding]
+    static IEnumerable<Type> DynamicBindings2
+    {
+        get
+        {
+            return new List<Type>() {
+                typeof(System.DateTime)
+            };
+        }
+    }
 }

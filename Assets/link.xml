@@ -1,0 +1,99 @@
+﻿<linker>
+    <assembly fullname="Assembly-CSharp">
+        <type fullname="Example01" preserve="all"/>
+        <type fullname="Example02" preserve="all"/>
+        <type fullname="Example10" preserve="all"/>
+        <type fullname="Example11" preserve="all"/>
+        <type fullname="Example12" preserve="all"/>
+        <type fullname="Example13" preserve="all"/>
+        <type fullname="Example20" preserve="all"/>
+        <type fullname="Example21" preserve="all"/>
+        <type fullname="Example22" preserve="all"/>
+        <type fullname="Example23" preserve="all"/>
+        <type fullname="Example30" preserve="all"/>
+        <type fullname="Example31" preserve="all"/>
+        <type fullname="Example32" preserve="all"/>
+        <type fullname="Example33" preserve="all"/>
+        <type fullname="Example34" preserve="all"/>
+        <type fullname="Example35" preserve="all"/>
+        <type fullname="Example101" preserve="all"/>
+        <type fullname="Example103" preserve="all"/>
+        <type fullname="Example104" preserve="all"/>
+        <type fullname="Example105" preserve="all"/>
+        <type fullname="Example106" preserve="all"/>
+        <type fullname="Example107" preserve="all"/>
+        <type fullname="Example108" preserve="all"/>
+        <type fullname="Example109" preserve="all"/>
+        <type fullname="SimpleDelegate" preserve="all"/>
+        <type fullname="ObjectArgDelegate" preserve="all"/>
+        <type fullname="ObjectRetDelegate" preserve="all"/>
+        <type fullname="VectorArgDelegate" preserve="all"/>
+        <type fullname="VarParamDelegate1" preserve="all"/>
+        <type fullname="VarParamDelegate2" preserve="all"/>
+        <type fullname="VarParamDelegate3" preserve="all"/>
+        <type fullname="XLua.ObjectCheck" preserve="all"/>
+        <type fullname="XLua.ObjectCast" preserve="all"/>
+        <type fullname="XLua.LuaDLL.lua_CSFunction" preserve="all"/>
+        <type fullname="Example101+TargetFunc" preserve="all"/>
+        <type fullname="Example101+CreateFunc" preserve="all"/>
+        <type fullname="Example103+TargetFunc" preserve="all"/>
+        <type fullname="Example103+CreateFunc" preserve="all"/>
+        <type fullname="Example104+TargetFunc" preserve="all"/>
+        <type fullname="Example104+CreateFunc" preserve="all"/>
+        <type fullname="Example105+TargetFunc" preserve="all"/>
+        <type fullname="Example105+CreateFunc" preserve="all"/>
+        <type fullname="Example106+TargetFunc" preserve="all"/>
+        <type fullname="Example106+CreateFunc" preserve="all"/>
+        <type fullname="Example107+TargetFunc" preserve="all"/>
+        <type fullname="Example107+CreateFunc" preserve="all"/>
+        <type fullname="Example108+TargetFunc" preserve="all"/>
+        <type fullname="Example108+CreateFunc" preserve="all"/>
+        <type fullname="Example109+TargetFunc" preserve="all"/>
+        <type fullname="Example109+CreateFunc" preserve="all"/>
+        <type fullname="XLua.LuaEnv+CustomLoader" preserve="all"/>
+        <type fullname="XLua.ObjectTranslator+PushCSObject" preserve="all"/>
+        <type fullname="XLua.ObjectTranslator+GetCSObject" preserve="all"/>
+        <type fullname="XLua.ObjectTranslator+UpdateCSObject" preserve="all"/>
+        <type fullname="Calculator" preserve="all"/>
+        <type fullname="CalculatorExtension" preserve="all"/>
+    </assembly>
+    <assembly fullname="UnityEngine.CoreModule">
+        <type fullname="UnityEngine.Application" preserve="all"/>
+        <type fullname="UnityEngine.Debug" preserve="all"/>
+        <type fullname="UnityEngine.Vector3" preserve="all"/>
+        <type fullname="UnityEngine.Bounds" preserve="all"/>
+        <type fullname="UnityEngine.Time" preserve="all"/>
+        <type fullname="UnityEngine.Transform" preserve="all"/>
+        <type fullname="UnityEngine.Component" preserve="all"/>
+        <type fullname="UnityEngine.GameObject" preserve="all"/>
+        <type fullname="UnityEngine.Object" preserve="all"/>
+        <type fullname="UnityEngine.Behaviour" preserve="all"/>
+        <type fullname="UnityEngine.Events.UnityEvent" preserve="all"/>
+        <type fullname="UnityEngine.Events.UnityEvent`1[[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" preserve="all"/>
+    </assembly>
+    <assembly fullname="mscorlib">
+        <type fullname="System.Delegate" preserve="all"/>
+        <type fullname="System.Object" preserve="all"/>
+        <type fullname="System.DateTime" preserve="all"/>
+    </assembly>
+    <assembly fullname="UnityEngine.ParticleSystemModule">
+        <type fullname="UnityEngine.ParticleSystem" preserve="all"/>
+    </assembly>
+    <assembly fullname="UnityEngine.UIModule">
+        <type fullname="UnityEngine.Canvas" preserve="all"/>
+        <type fullname="UnityEngine.RenderMode" preserve="all"/>
+    </assembly>
+    <assembly fullname="UnityEngine.UnityWebRequestModule">
+        <type fullname="UnityEngine.Networking.UnityWebRequest" preserve="all"/>
+        <type fullname="UnityEngine.Networking.DownloadHandler" preserve="all"/>
+    </assembly>
+    <assembly fullname="UnityEngine.UI">
+        <type fullname="UnityEngine.EventSystems.UIBehaviour" preserve="all"/>
+        <type fullname="UnityEngine.UI.Selectable" preserve="all"/>
+        <type fullname="UnityEngine.UI.Button" preserve="all"/>
+        <type fullname="UnityEngine.UI.Button+ButtonClickedEvent" preserve="all"/>
+        <type fullname="UnityEngine.UI.InputField" preserve="all"/>
+        <type fullname="UnityEngine.UI.Toggle" preserve="all"/>
+        <type fullname="UnityEngine.UI.Toggle+ToggleEvent" preserve="all"/>
+    </assembly>
+</linker>

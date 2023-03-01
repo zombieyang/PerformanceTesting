@@ -104,7 +104,7 @@ public class CommandLineTests
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.IL2CPP);
 
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[] { "Assets/TempScript/TempScene.unity"};
+        buildPlayerOptions.scenes = new[] { "Assets/Scenes/SampleScene.unity"};
         buildPlayerOptions.locationPathName = "build/" + exedir + "/PerformanceTest.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.None;
@@ -142,7 +142,7 @@ public class CommandLineTests
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.iOS, ScriptingImplementation.IL2CPP);
 
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[] { "Assets/TempScript/TempScene.unity"};
+        buildPlayerOptions.scenes = new[] { "Assets/Scenes/SampleScene.unity"};
         buildPlayerOptions.locationPathName = "build/" + exedir;
         buildPlayerOptions.target = BuildTarget.iOS;
         buildPlayerOptions.options = BuildOptions.None;
@@ -181,7 +181,7 @@ public class CommandLineTests
         PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
 
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[] { "Assets/TempScript/TempScene.unity"};
+        buildPlayerOptions.scenes = new[] { "Assets/Scenes/SampleScene.unity"};
         buildPlayerOptions.locationPathName = "build/" + exedir + ".apk";
         buildPlayerOptions.target = BuildTarget.Android;
         buildPlayerOptions.options = BuildOptions.None;

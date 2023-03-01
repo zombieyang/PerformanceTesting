@@ -645,9 +645,9 @@ public class Test : MonoBehaviour
 
             const DateTime =  loadType(jsEnv.GetTypeByString('System.DateTime'));
             const jsdate = new Date()
-            let csdate = new DateTime(jsdate.getFullYear(), jsdate.getMonth() + 1, jsdate.getDay() + 1, jsdate.getHours(), jsdate.getMinutes(), jsdate.getSeconds(), jsdate.getMilliseconds());
-            Debug.Log(`date:${csdate.ToString()}, js date:${jsdate}`)
-            obj.TestDateTime(csdate);
+            // let csdate = new DateTime(jsdate.getFullYear(), jsdate.getMonth() + 1, jsdate.getDay() + 1, jsdate.getHours(), jsdate.getMinutes(), jsdate.getSeconds(), jsdate.getMilliseconds());
+            // Debug.Log(`date:${csdate.ToString()}, js date:${jsdate}`)
+            // obj.TestDateTime(csdate);
             obj.OptionalTest1();
             obj.OptionalTest1(9);
             obj.OptionalTest2();
@@ -692,15 +692,15 @@ public class Test : MonoBehaviour
         var sd = jsEnv.Eval<SimpleDelegate>("(x, y) => {log(`lambda x=${x},y=${y}`); return x + y;}");
         Debug.Log("sd(1024, 4096)=" + sd(1024, 4096));
 
-        // var willThrow = jsEnv.Eval<SimpleDelegate>("(x, y) => { throw new Error('Required'); }");
-        // try
-        // {
-        //     willThrow(1, 1);
-        // }
-        // catch (Exception e)
-        // {
-        //     Debug.Log("test callback throw ok:" + e);
-        // }
+        var willThrow = jsEnv.Eval<SimpleDelegate>("(x, y) => { throw new Error('Required'); }");
+        try
+        {
+            willThrow(1, 1);
+        }
+        catch (Exception e)
+        {
+            Debug.Log("test callback throw ok:" + e);
+        }
 
         jsEnv.Eval("gc()");
 
