@@ -20,11 +20,9 @@ public static class ExecuteUtil
         double duration;
         object result;
 
-        Timer timer = new Timer();
         try
         {
-            result = execute.RunCS(count);
-            duration = timer.End();
+            result = execute.RunCS(count, out duration);
         }
         catch (Exception e)
         {
@@ -46,11 +44,9 @@ public static class ExecuteUtil
         double duration;
         object result;
 
-        Timer timer = new Timer();
         try
         {
-            result = execute.RunJS(env, count);
-            duration = timer.End();
+            result = execute.RunJS(env, count, out duration);
         }
         catch (Exception e)
         {
@@ -72,11 +68,9 @@ public static class ExecuteUtil
         double duration;
         object result;
 
-        Timer timer = new Timer();
         try
         {
-            result = execute.RunLua(env, count);
-            duration = timer.End();
+            result = execute.RunLua(env, count, out duration);
         }
         catch (Exception e)
         {

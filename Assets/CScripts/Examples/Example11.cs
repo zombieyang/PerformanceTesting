@@ -15,35 +15,41 @@ public class Example11 : IExecute
     public string Method => "void Payload(int);";
     public CallTarget Target => CallTarget.ScriptCallCSharp;
 
-    public object RunCS(int count)
+    public object RunCS(int count, out double duration)
     {
         var obj = new Example11();
+        Timer timer = new Timer();
         for (var i = 0; i < count; i++)
         {
             obj.Payload(i);
         }
+        duration = timer.End();
         return null;
     }
-    public object RunJS(JsEnv env, int count)
+    public object RunJS(JsEnv env, int count, out double duration)
     {
-        env.Eval(string.Format(
-@"
-var Example = new (require('csharp').Example11)();
-for(let i = 0; i < {0}; i++){{
-    Example.Payload(i);
-}}
-", count));
+        duration = env.Eval<double>(string.Format(
+@"(function() {{
+    var Example = new (require('csharp').Example11)();
+    const start = Date.now();
+    for(let i = 0; i < {0}; i++){{
+        Example.Payload(i);
+    }}
+    return Date.now() - start;
+}})()", count));
         return null;
     }
-    public object RunLua(LuaEnv env, int count)
+    public object RunLua(LuaEnv env, int count, out double duration)
     {
-        env.DoString(string.Format(
+        duration = 1000 *(double)env.DoString(string.Format(
 @"
 local Example = CS.Example11();
+local start = os.clock();
 for i = 1,{0} do
     Example:Payload(i);
 end
-", count));
+return os.clock() - start;
+", count))[0];
         return null;
     }
 

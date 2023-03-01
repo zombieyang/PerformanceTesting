@@ -14,44 +14,50 @@ public class Example23 : IExecute
     public string Method => "float Payload();";
     public CallTarget Target => CallTarget.ScriptCallCSharp;
 
-    public object RunCS(int count)
+    public object RunCS(int count, out double duration)
     {
         float result = 0f;
         var obj = new Example23();
+        Timer timer = new Timer();
         for (var i = 0; i < count; i++)
         {
             result += obj.Payload();
         }
+        duration = timer.End();
         return result;
     }
-    public object RunJS(JsEnv env, int count)
+    public object RunJS(JsEnv env, int count, out double duration)
     {
-        float result = env.Eval<float>(string.Format(
-@"
-var Example = new (require('csharp').Example23)();
-var result = 0;
-for(let i = 0; i < {0}; i++){{
-    result += Example.Payload();
-}}
+        duration = env.Eval<double>(string.Format(
+@"(function() {{
+    var Example = new (require('csharp').Example23)();
+    var result = 0;
+    const start = Date.now();
+    for(let i = 0; i < {0}; i++){{
+        result += Example.Payload();
+    }}
 
-result;
-", count));
-        return result;
+    global.result = result;
+    return Date.now() - start;
+}})()", count));
+        return env.Eval<float>("result");
     }
-    public object RunLua(LuaEnv env, int count)
+    public object RunLua(LuaEnv env, int count, out double duration)
     {
         object[] result = env.DoString(string.Format(
 @"
 local Example = CS.Example23();
 local result = 0;
+local start = os.clock();
 for i = 0,{0} do
     result = result + Example:Payload();
 end
 
-return result;
+return os.clock() - start, result;
 ", count - 1));
 
-        return result != null && result.Length > 0 ? result[0] : null;
+        duration = 1000 *(double)result[0];
+        return result[1];
     }
 
     public float Payload()
