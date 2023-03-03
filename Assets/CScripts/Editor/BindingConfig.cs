@@ -39,6 +39,7 @@ public static class XLuaConfig
                     typeof(UnityEngine.Application),
                     typeof(Debug),
                     typeof(Vector3),
+                    typeof(Quaternion),
                     typeof(Bounds),
                     typeof(Time),
                     typeof(Transform),
@@ -50,6 +51,10 @@ public static class XLuaConfig
                     typeof(ParticleSystem),
                     typeof(Canvas),
                     typeof(RenderMode),
+                    typeof(Renderer),
+                    typeof(SkinnedMeshRenderer),
+                    typeof(Input),
+                    typeof(UnityEngine.Random),
                     typeof(Behaviour),
 
                     typeof(UnityEngine.Networking.UnityWebRequest),
