@@ -32,11 +32,13 @@ public class Example21 : IExecute
 @"(function() {{
     var Example = new (require('csharp').Example21)();
     var result = 0;
+    const start = Date.now();
     for(let i = 0; i < {0}; i++){{
         result += Example.Payload(i, i + 1, i + 2);
     }}
 
     global.result = result;
+    return Date.now() - start;
 }})()", count));
         return env.Eval<float>("result");
     }
