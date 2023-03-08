@@ -86,7 +86,6 @@ async function runBuild(platform)
     execUnity(`-executeMethod Puerts.Editor.Generator.UnityMenu.GenerateMacroHeader`);
     if (platform == 'ios') mkdir("-p", `${pwd}/build/ib`)
     execUnity(`-executeMethod CommandLineTests.Build${platform == 'ios' ? 'iOS' : 'Android'}B`);
-    if (platform == 'ios') writeFileSync(`${pwd}/build/ib/Unity-iPhone.xcodeproj/project.pbxproj`, readFileSync(`${pwd}/build/ib/Unity-iPhone.xcodeproj/project.pbxproj`, 'utf-8').replaceAll('ENABLE_BITCODE = YES;', 'ENABLE_BITCODE = NO'), 'utf-8');
 
     // // 生成v1 static wrapper
     console.log("[Puer] Generating wrapper");
@@ -96,7 +95,6 @@ async function runBuild(platform)
     console.log("[Puer] Building testplayer for wrapper mode");
     if (platform == 'ios') mkdir("-p", `${pwd}/build/ic`)
     execUnity(`-executeMethod CommandLineTests.Build${platform == 'ios' ? 'iOS' : 'Android'}C`);
-    if (platform == 'ios') writeFileSync(`${pwd}/build/ic/Unity-iPhone.xcodeproj/project.pbxproj`, readFileSync(`${pwd}/build/ic/Unity-iPhone.xcodeproj/project.pbxproj`, 'utf-8').replaceAll('ENABLE_BITCODE = YES;', 'ENABLE_BITCODE = NO'), 'utf-8');
     
     console.log("[Puer] v2 start");
     writeFileSync(`${pwd}/Assets/csc.rsp`, `
@@ -119,7 +117,6 @@ async function runBuild(platform)
     if (platform == 'ios') mkdir("-p", `${pwd}/build/iy`)
     execUnity(`-executeMethod CommandLineTests.Build${platform == 'ios' ? 'iOS' : 'Android'}Y`);
     if (platform == 'ios') cp('-r', join(dirname(unityPath), '../il2cpp/external/google'), `${pwd}/build/iy/Libraries/external/`);
-    if (platform == 'ios') writeFileSync(`${pwd}/build/iy/Unity-iPhone.xcodeproj/project.pbxproj`, readFileSync(`${pwd}/build/iy/Unity-iPhone.xcodeproj/project.pbxproj`, 'utf-8').replaceAll('ENABLE_BITCODE = YES;', 'ENABLE_BITCODE = NO'), 'utf-8');
     
     rm("-rf", `${pwd}/puerts/unity/native_src_il2cpp/Src/FunctionBridge.Gen.h`);
     rm("-rf", `${pwd}/Assets/Gen`);
@@ -143,6 +140,5 @@ async function runBuild(platform)
     if (platform == 'ios') mkdir("-p", `${pwd}/build/ix`)
     execUnity(`-executeMethod CommandLineTests.Build${platform == 'ios' ? 'iOS' : 'Android'}X`);
     if (platform == 'ios') cp('-r', join(dirname(unityPath), '../il2cpp/external/google'), `${pwd}/build/ix/Libraries/external/`);
-    if (platform == 'ios') writeFileSync(`${pwd}/build/ix/Unity-iPhone.xcodeproj/project.pbxproj`, readFileSync(`${pwd}/build/ix/Unity-iPhone.xcodeproj/project.pbxproj`, 'utf-8').replaceAll('ENABLE_BITCODE = YES;', 'ENABLE_BITCODE = NO'), 'utf-8');
 
 ``}

@@ -53,7 +53,7 @@ public static class XLuaConfig
                     typeof(RenderMode),
                     typeof(Renderer),
                     typeof(SkinnedMeshRenderer),
-                    typeof(Input),
+                    typeof(UnityEngine.Input),
                     typeof(UnityEngine.Random),
                     typeof(Behaviour),
 
@@ -74,6 +74,15 @@ public static class XLuaConfig
                 .Distinct();
         }
     }
+    [XLua.BlackList]
+    public static List<List<string>> BlackList = new List<List<string>> {
+        new List<string>() { "UnityEngine.Input", "IsJoystickPreconfigured", "System.String" }
+    };
+    [Puerts.Filter]
+    public static bool Filter(MemberInfo mb) {
+        return mb.Name == "IsJoystickPreconfigured" && mb.DeclaringType == typeof(UnityEngine.Input);
+    }
+
     [Puerts.Binding]
     static IEnumerable<Type> DynamicBindings2
     {
