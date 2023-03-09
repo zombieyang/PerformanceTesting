@@ -58,6 +58,7 @@ async function runBuild(platform)
         exec(`git restore ${pwd}/puerts/unity/Assets/core/upm/Plugins/x86_64`);
         cd(pwd);
     }
+    let platformChar = {'win': 'w', 'mac': 'o', 'ios': 'i', 'android': 'a'}[platform];
 
     rm("-rf", `${pwd}/Assets/Gen`);
     rm("-rf", `${pwd}/Assets/Gen.meta`);
@@ -77,15 +78,15 @@ async function runBuild(platform)
     // build v1 plugin
     console.log("[Puer] v1 start");
     cd(`${pwd}/puerts/unity/native_src`)
-    assert.equal(0, exec(`node ../cli make v${platform == 'ios' ? 'i' : 'a'}8`).code);
+    assert.equal(0, exec(`node ../cli make v${platformChar}8`).code);
     cd(pwd)
 
     // build
     console.log("[Puer] Building testplayer for reflection mode");
     writeFileSync(`${pwd}/Assets/csc.rsp`, '-define:PUERTS_CPP_OUTPUT_TO_NATIVE_SRC_UPM;')
     execUnity(`-executeMethod Puerts.Editor.Generator.UnityMenu.GenerateMacroHeader`);
-    if (platform == 'ios') mkdir("-p", `${pwd}/build/ib`)
-    execUnity(`-executeMethod CommandLineTests.Build${platform == 'ios' ? 'iOS' : 'Android'}B`);
+    if (platform == 'ios') mkdir("-p", `${pwd}/build/ir1`)
+    execUnity(`-executeMethod CommandLineTests.BuildInBatchMode --platform ${platform} --dist ${platformChar}r1`);
 
     // // 生成v1 static wrapper
     console.log("[Puer] Generating wrapper");
@@ -93,8 +94,8 @@ async function runBuild(platform)
     rm("-rf", `${pwd}/Library/ScriptAssemblies/Assembly-CSharp.dll`);
     // build
     console.log("[Puer] Building testplayer for wrapper mode");
-    if (platform == 'ios') mkdir("-p", `${pwd}/build/ic`)
-    execUnity(`-executeMethod CommandLineTests.Build${platform == 'ios' ? 'iOS' : 'Android'}C`);
+    if (platform == 'ios') mkdir("-p", `${pwd}/build/iw1`)
+    execUnity(`-executeMethod CommandLineTests.BuildInBatchMode --platform ${platform} --dist ${platformChar}w1`);
     
     console.log("[Puer] v2 start");
     writeFileSync(`${pwd}/Assets/csc.rsp`, `
@@ -109,14 +110,14 @@ async function runBuild(platform)
     console.log("[Puer] Building PuertsPlugin Il2Cpp");
     restoreMeta();
     cd(`${pwd}/puerts/unity/native_src_il2cpp`)
-    assert.equal(0, exec(`node ../cli make v${platform == 'ios' ? 'i' : 'a'}8`).code);
+    assert.equal(0, exec(`node ../cli make v${platformChar}8`).code);
     cd(pwd)
 
     //build
     console.log("[Puer] Building testplayer for il2cpp version wrapper mode");
-    if (platform == 'ios') mkdir("-p", `${pwd}/build/iy`)
-    execUnity(`-executeMethod CommandLineTests.Build${platform == 'ios' ? 'iOS' : 'Android'}Y`);
-    if (platform == 'ios') cp('-r', join(dirname(unityPath), '../il2cpp/external/google'), `${pwd}/build/iy/Libraries/external/`);
+    if (platform == 'ios') mkdir("-p", `${pwd}/build/iw2`)
+    execUnity(`-executeMethod CommandLineTests.BuildInBatchMode --platform ${platform} --dist ${platformChar}w2`);
+    if (platform == 'ios') cp('-r', join(dirname(unityPath), '../il2cpp/external/google'), `${pwd}/build/iw2/Libraries/external/`);
     
     rm("-rf", `${pwd}/puerts/unity/native_src_il2cpp/Src/FunctionBridge.Gen.h`);
     rm("-rf", `${pwd}/Assets/Gen`);
@@ -132,13 +133,13 @@ async function runBuild(platform)
     console.log("[Puer] Building PuertsPlugin Il2Cpp");
     restoreMeta();
     cd(`${pwd}/puerts/unity/native_src_il2cpp`)
-    exec(`node ../cli make v${platform == 'ios' ? 'i' : 'a'}8`);
+    exec(`node ../cli make v${platformChar}8`);
     cd(pwd)
     
     //build
     console.log("[Puer] Building testplayer for il2cpp version reflection mode");
-    if (platform == 'ios') mkdir("-p", `${pwd}/build/ix`)
-    execUnity(`-executeMethod CommandLineTests.Build${platform == 'ios' ? 'iOS' : 'Android'}X`);
-    if (platform == 'ios') cp('-r', join(dirname(unityPath), '../il2cpp/external/google'), `${pwd}/build/ix/Libraries/external/`);
+    if (platform == 'ios') mkdir("-p", `${pwd}/build/ir2`)
+    execUnity(`-executeMethod CommandLineTests.BuildInBatchMode --platform ${platform} --dist ${platformChar}r2`);
+    if (platform == 'ios') cp('-r', join(dirname(unityPath), '../il2cpp/external/google'), `${pwd}/build/ir2/Libraries/external/`);
 
-``}
+}
