@@ -118,6 +118,7 @@ public class CommandLineTests
     public static bool Build(BuildTargetGroup BTG, BuildTarget BT, string distname)
     {
         PlayerSettings.SetScriptingBackend(BTG, ScriptingImplementation.IL2CPP);
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(BTG, "");
 
         PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
         UnityEditor.EditorUserBuildSettings.SetPlatformSettings(

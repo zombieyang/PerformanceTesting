@@ -86,7 +86,6 @@ async function runBuild(platform)
     console.log("[Puer] Building testplayer for reflection mode");
     writeFileSync(`${pwd}/Assets/csc.rsp`, '-define:PUERTS_CPP_OUTPUT_TO_NATIVE_SRC_UPM;')
     execUnity(`-executeMethod Puerts.Editor.Generator.UnityMenu.GenerateMacroHeader`);
-    if (platform == 'ios') mkdir("-p", `${pwd}/build/ir1`)
     execUnity(`-executeMethod CommandLineTests.BuildInBatchMode --platform ${platform} --dist ${platformChar}r1`);
 
     // // 生成v1 static wrapper
