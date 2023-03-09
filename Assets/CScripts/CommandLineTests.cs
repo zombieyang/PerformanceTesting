@@ -130,6 +130,8 @@ public class CommandLineTests
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/SampleScene.unity"};
         if (BT == BuildTarget.StandaloneOSX)
             buildPlayerOptions.locationPathName = "build/" + distname + ".app";
+        if (BT == BuildTarget.StandaloneWindows64)
+            buildPlayerOptions.locationPathName = "build/" + distname + ".exe";
         if (BT == BuildTarget.iOS)
             buildPlayerOptions.locationPathName = "build/" + distname;
         if (BT == BuildTarget.Android)

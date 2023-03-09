@@ -59,6 +59,7 @@ async function runBuild(platform)
         cd(pwd);
     }
     let platformChar = {'win': 'w', 'osx': 'o', 'ios': 'i', 'android': 'a'}[platform];
+    let archChar = platform == 'win' ? '6' : '8'
 
     rm("-rf", `${pwd}/Assets/Gen`);
     rm("-rf", `${pwd}/Assets/Gen.meta`);
@@ -78,7 +79,7 @@ async function runBuild(platform)
     // build v1 plugin
     console.log("[Puer] v1 start");
     cd(`${pwd}/puerts/unity/native_src`)
-    assert.equal(0, exec(`node ../cli make v${platformChar}8`).code);
+    assert.equal(0, exec(`node ../cli make v${platformChar}${archChar}`).code);
     cd(pwd)
 
     // build
@@ -110,7 +111,7 @@ async function runBuild(platform)
     console.log("[Puer] Building PuertsPlugin Il2Cpp");
     restoreMeta();
     cd(`${pwd}/puerts/unity/native_src_il2cpp`)
-    assert.equal(0, exec(`node ../cli make v${platformChar}8`).code);
+    assert.equal(0, exec(`node ../cli make v${platformChar}${archChar}`).code);
     cd(pwd)
 
     //build
@@ -133,7 +134,7 @@ async function runBuild(platform)
     console.log("[Puer] Building PuertsPlugin Il2Cpp");
     restoreMeta();
     cd(`${pwd}/puerts/unity/native_src_il2cpp`)
-    exec(`node ../cli make v${platformChar}8`);
+    exec(`node ../cli make v${platformChar}${archChar}`);
     cd(pwd)
     
     //build

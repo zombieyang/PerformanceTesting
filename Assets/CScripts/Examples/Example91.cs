@@ -11,7 +11,7 @@ using XLua;
 public class Example91 : IExecute
 {
     public bool Static => true;
-    public string Method => "fibonacci(32);";
+    public string Method => "fibonacci(40);";
     public CallTarget Target => CallTarget.ScriptCallScript;
 
     protected static int fibonacci(int level)
@@ -28,7 +28,7 @@ public class Example91 : IExecute
         long sum = 0;
         for (var i = 0; i < count; i++)
         {
-            sum += fibonacci(32);
+            sum += fibonacci(40);
         }
         duration = timer.End();
         return null;
@@ -48,7 +48,7 @@ public class Example91 : IExecute
     const start = Date.now();
     let sum = 0;
     for (let i = 0; i < {0}; i++) {{
-        sum += fibonacci(32)
+        sum += fibonacci(40)
     }}
     return Date.now() - start;
 }})()", count));
@@ -73,7 +73,7 @@ public class Example91 : IExecute
         local sum = 0;
         for i = 1,{0} 
         do
-            sum = sum + fibonacci(32)
+            sum = sum + fibonacci(40)
         end
         return os.clock() - start;
 ", count))[0];
