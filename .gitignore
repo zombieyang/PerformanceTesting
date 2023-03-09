@@ -19,3 +19,5 @@ Assets/XLua/Gen/XLuaGenAutoRegister.cs
 Assets/XLua/Gen/XLuaGenAutoRegister.cs.meta
 node_modules
 .DS_Store
+.script/*.sh
+.script/*.bat
