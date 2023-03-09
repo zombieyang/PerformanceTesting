@@ -23,7 +23,7 @@ const options = program.opts();
 
 ///////////////////////////////////////////////////
 (async function () {
-    if (['ios', 'android'].indexOf(options.platform) == -1) return console.error('invalid platform: ' + options.platform);
+    if (['ios', 'android', 'osx', 'win'].indexOf(options.platform) == -1) return console.error('invalid platform: ' + options.platform);
     runBuild(options.platform);
 })().catch(err => {
     console.log(`error occured! code: ${err.message}. please view log.txt`);
@@ -58,7 +58,7 @@ async function runBuild(platform)
         exec(`git restore ${pwd}/puerts/unity/Assets/core/upm/Plugins/x86_64`);
         cd(pwd);
     }
-    let platformChar = {'win': 'w', 'mac': 'o', 'ios': 'i', 'android': 'a'}[platform];
+    let platformChar = {'win': 'w', 'osx': 'o', 'ios': 'i', 'android': 'a'}[platform];
 
     rm("-rf", `${pwd}/Assets/Gen`);
     rm("-rf", `${pwd}/Assets/Gen.meta`);

@@ -106,9 +106,10 @@ public class CommandLineTests
             res = Build(BuildTargetGroup.Android, BuildTarget.Android, distname);
         if (platform == "ios") 
             res = Build(BuildTargetGroup.iOS, BuildTarget.iOS, distname);
-        if (platform == "standalone") {
+        if (platform == "osx") 
             res = Build(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX, distname);
-        }
+        if (platform == "win")
+            res = Build(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, distname);
 
         UnityEngine.Debug.Log("======BatchMode RunEnd======");
         Application.Quit(res ? 0 : 1);
