@@ -31,7 +31,7 @@ public class Example91 : IExecute
             sum += fibonacci(40);
         }
         duration = timer.End();
-        return null;
+        return sum;
     }
 
     public object RunJS(JsEnv env, int count, out double duration)
@@ -50,14 +50,15 @@ public class Example91 : IExecute
     for (let i = 0; i < {0}; i++) {{
         sum += fibonacci(40)
     }}
+    global.result = sum;
     return Date.now() - start;
 }})()", count));
-        return null;
+        return env.Eval<int>("result");
     }
     public object RunLua(LuaEnv env, int count, out double duration)
     {
         count = 1;
-        duration = 1000 * (double)env.DoString(string.Format(
+        var result = env.DoString(string.Format(
 @"
         local function fibonacci(n)
             if n == 0 then 
@@ -75,8 +76,9 @@ public class Example91 : IExecute
         do
             sum = sum + fibonacci(40)
         end
-        return os.clock() - start;
-", count))[0];
-        return null;
+        return os.clock() - start, sum;
+", count));
+        duration = 1000 * (double)result[0];
+        return result[1];
     }
 }
